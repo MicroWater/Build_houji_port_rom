@@ -26,10 +26,11 @@ vendor_zip_name=$(echo ${VENDOR_URL} | cut -d"/" -f5)            # 底包的 zip
 android_version=$(echo ${URL} | cut -d"_" -f5 | cut -d"." -f1) # Android 版本号, 例: 14
 build_time=$(date) && build_utc=$(date -d "$build_time" +%s)   # 构建时间
 
+android14-6.1="$GITHUB_WORKSPACE"/"${device}"_files/android14-6.1_kernelsu.ko
+
 sudo chmod -R 777 "$GITHUB_WORKSPACE"/tools
 magiskboot="$GITHUB_WORKSPACE"/tools/magiskboot
 ksud="$GITHUB_WORKSPACE"/tools/ksud
-android14-6.1="$GITHUB_WORKSPACE"/tools/android14-6.1_kernelsu.ko
 a7z="$GITHUB_WORKSPACE"/tools/7zzs
 zstd="$GITHUB_WORKSPACE"/tools/zstd
 payload_extract="$GITHUB_WORKSPACE"/tools/payload_extract
