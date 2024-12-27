@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="houji_files">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/houji_files/recovery.zip!/" />
+      <root url="jar://$PROJECT_DIR$/houji_files/bootanimation.zip!/" />
+      <root url="jar://$PROJECT_DIR$/houji_files/overlay.zip!/" />
+      <root url="jar://$PROJECT_DIR$/houji_files/CameraTools_beta.zip!/" />
+      <root url="jar://$PROJECT_DIR$/houji_files/device_features.zip!/" />
+      <root url="jar://$PROJECT_DIR$/houji_files/PowerKeeper.zip!/" />
+      <root url="jar://$PROJECT_DIR$/houji_files/displayconfig.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
