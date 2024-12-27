@@ -29,6 +29,7 @@ build_time=$(date) && build_utc=$(date -d "$build_time" +%s)   # 构建时间
 sudo chmod -R 777 "$GITHUB_WORKSPACE"/tools
 magiskboot="$GITHUB_WORKSPACE"/tools/magiskboot
 ksud="$GITHUB_WORKSPACE"/tools/ksud
+android14-6.1="$GITHUB_WORKSPACE"/tools/android14-6.1_kernelsu.ko
 a7z="$GITHUB_WORKSPACE"/tools/7zzs
 zstd="$GITHUB_WORKSPACE"/tools/zstd
 payload_extract="$GITHUB_WORKSPACE"/tools/payload_extract
@@ -166,7 +167,7 @@ echo -e "${Red}- 添加 KernelSU 支持 (可选择)"
 mkdir -p "$GITHUB_WORKSPACE"/init_boot
 cd "$GITHUB_WORKSPACE"/init_boot
 cp -f "$GITHUB_WORKSPACE"/"${device}"/firmware-update/init_boot.img "$GITHUB_WORKSPACE"/init_boot
-$ksud boot-patch -b "$GITHUB_WORKSPACE"/init_boot/init_boot.img --magiskboot $magiskboot --kmi android14-6.1
+$ksud boot-patch -b "$GITHUB_WORKSPACE"/init_boot/init_boot.img --magiskboot $magiskboot --kmi "${android14-6.1}"
 mv -f "$GITHUB_WORKSPACE"/init_boot/kernelsu_*.img "$GITHUB_WORKSPACE"/"${device}"/firmware-update/init_boot-kernelsu.img
 rm -rf "$GITHUB_WORKSPACE"/init_boot
 # 替换 vendor_boot 的 fstab
@@ -226,13 +227,13 @@ sudo rm -rf "$GITHUB_WORKSPACE"/images/product/etc/displayconfig/*
 sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/displayconfig.zip -d "$GITHUB_WORKSPACE"/images/product/etc/displayconfig/
 # 修复精准电量 (亮屏可用时长)
 echo -e "${Red}- 修复精准电量 (亮屏可用时长)"
-sudo rm -rf "$GITHUB_WORKSPACE"/images/system/system/app/PowerKeeper/*
-sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/PowerKeeper.zip -d "$GITHUB_WORKSPACE"/images/system/system/app/PowerKeeper/
+sudo rm -rf "$GITHUB_WORKSPACE"/images/system_ext/app/PowerKeeper/*
+sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/PowerKeeper.zip -d "$GITHUB_WORKSPACE"/images/system_ext/app/PowerKeeper/
 # 修复注视感知
 echo -e "${Red}- 修复注视感知"
 sudo rm -rf "$GITHUB_WORKSPACE"/images/product/app/MiAONService*
-mkdir "$GITHUB_WORKSPACE"/images/product/app/MiAONService
-sudo cp "$GITHUB_WORKSPACE"/"${device}"_files/MiAONService.apk "$GITHUB_WORKSPACE"/images/product/app/MiAONService
+mkdir "$GITHUB_WORKSPACE"/images/product/app/MiAONServiceV2
+sudo cp "$GITHUB_WORKSPACE"/"${device}"_files/MiAONServiceV2.apk "$GITHUB_WORKSPACE"/images/product/app/MiAONServiceV2
 # 统一 build.prop
 echo -e "${Red}- 统一 build.prop"
 sudo sed -i 's/ro.build.user=[^*]*/ro.build.user=YuKongA/' "$GITHUB_WORKSPACE"/images/system/system/build.prop
@@ -268,7 +269,7 @@ sudo sed -i '/# end of file/i persist.vendor.qcom.bluetooth.aptxadaptiver2_2_sup
 # 替换相机
 echo -e "${Red}- 替换相机"
 sudo rm -rf "$GITHUB_WORKSPACE"/images/product/priv-app/MiuiCamera/*
-sudo cat "$GITHUB_WORKSPACE"/"${device}"_files/MiuiCamera.apk.1 "$GITHUB_WORKSPACE"/"${device}"_files/MiuiCamera.apk.2 "$GITHUB_WORKSPACE"/"${device}"_files/MiuiCamera.apk.3 >"$GITHUB_WORKSPACE"/"${device}"_files/MiuiCamera.apk
+sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/MiuiCamera.zip -d "$GITHUB_WORKSPACE"/"${device}"_files/
 sudo cp -f "$GITHUB_WORKSPACE"/"${device}"_files/MiuiCamera.apk "$GITHUB_WORKSPACE"/images/product/priv-app/MiuiCamera/
 # 替换相机标定
 echo -e "${Red}- 替换相机标定"
