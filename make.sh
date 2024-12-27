@@ -26,11 +26,10 @@ vendor_zip_name=$(echo ${VENDOR_URL} | cut -d"/" -f5)            # 底包的 zip
 android_version=$(echo ${URL} | cut -d"_" -f5 | cut -d"." -f1) # Android 版本号, 例: 14
 build_time=$(date) && build_utc=$(date -d "$build_time" +%s)   # 构建时间
 
-android14-6.1="$GITHUB_WORKSPACE"/"${device}"_files/android14-6.1_kernelsu.ko
-
 sudo chmod -R 777 "$GITHUB_WORKSPACE"/tools
 magiskboot="$GITHUB_WORKSPACE"/tools/magiskboot
 ksud="$GITHUB_WORKSPACE"/tools/ksud
+lkm="$GITHUB_WORKSPACE"/tools/KernelSU/android14-6.1_kernelsu.ko
 a7z="$GITHUB_WORKSPACE"/tools/7zzs
 zstd="$GITHUB_WORKSPACE"/tools/zstd
 payload_extract="$GITHUB_WORKSPACE"/tools/payload_extract
@@ -168,7 +167,7 @@ echo -e "${Red}- 添加 KernelSU 支持 (可选择)"
 mkdir -p "$GITHUB_WORKSPACE"/init_boot
 cd "$GITHUB_WORKSPACE"/init_boot
 cp -f "$GITHUB_WORKSPACE"/"${device}"/firmware-update/init_boot.img "$GITHUB_WORKSPACE"/init_boot
-$ksud boot-patch -b "$GITHUB_WORKSPACE"/init_boot/init_boot.img --magiskboot $magiskboot --kmi "${android14-6.1}"
+$ksud boot-patch -b "$GITHUB_WORKSPACE"/init_boot/init_boot.img --magiskboot $magiskboot -m $lkm
 mv -f "$GITHUB_WORKSPACE"/init_boot/kernelsu_*.img "$GITHUB_WORKSPACE"/"${device}"/firmware-update/init_boot-kernelsu.img
 rm -rf "$GITHUB_WORKSPACE"/init_boot
 # 替换 vendor_boot 的 fstab
