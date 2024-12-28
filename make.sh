@@ -216,10 +216,10 @@ sudo cp -f "$GITHUB_WORKSPACE"/"${device}"_files/fstab.qcom "$GITHUB_WORKSPACE"/
 # 替换 Product 的叠加层
 echo -e "${Red}- 替换 product 的叠加层"
 sudo rm -rf "$GITHUB_WORKSPACE"/images/product/overlay/*
-sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/system.zip -d "$GITHUB_WORKSPACE"/images/system/system/
+sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/overlay.zip -d "$GITHUB_WORKSPACE"/images/product/overlay
 # 修复 Pangu
 echo -e "${Red}- 修复Pangu"
-sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/overlay.zip -d "$GITHUB_WORKSPACE"/images/product/overlay
+sudo unzip -o -q "$GITHUB_WORKSPACE"/"${device}"_files/system.zip -d "$GITHUB_WORKSPACE"/images/system/system/
 # 替换 device_features 文件
 echo -e "${Red}- 替换 device_features 文件"
 sudo rm -rf "$GITHUB_WORKSPACE"/images/product/etc/device_features/*
